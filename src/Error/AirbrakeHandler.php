@@ -31,8 +31,6 @@ class AirbrakeHandler extends ErrorHandler
         $options['AirbrakeCake.apiKey'] = Configure::read('AirbrakeCake.apiKey');
         $options['AirbrakeCake.options'] = Configure::read('AirbrakeCake.options');
         parent::__construct($options);
-        
-        $this->_airbrake = $this->getAirbrake();
     }
 
     /**
@@ -50,7 +48,7 @@ class AirbrakeHandler extends ErrorHandler
      *
      * @return Airbrake\Client
      */
-    public function getAirbrake()
+    public function getAirbrakeInstance()
     {
         if (empty($this->_airbrake)) {
             $apiKey = $this->_options['AirbrakeCake.apiKey'];
@@ -69,7 +67,7 @@ class AirbrakeHandler extends ErrorHandler
                 $options['extraParameters']['User']['id'] = $session->read('Auth.User.id');
             }
             $config = new AirbrakeConfiguration($apiKey, $options);
-            return new AirbrakeClient($config);
+            $this->_airbrake = new AirbrakeClient($config);
         }
         return $this->_airbrake;
     }
@@ -92,7 +90,8 @@ class AirbrakeHandler extends ErrorHandler
             'extraParams' => null
         ));
 
-        $this->_airbrake->notify($notice);
+        $airbreak = $this->getAirbrakeInstance();
+        $airbreak->notify($notice);
         return parent::handleError($code, $description, $file, $line);
     }
 
@@ -101,7 +100,8 @@ class AirbrakeHandler extends ErrorHandler
      */
     public function handleException(\Exception $exception)
     {
-        $this->_airbrake->notifyOnException($exception);
+        $airbreak = $this->getAirbrakeInstance();
+        $airbreak->notifyOnException($exception);
         parent::handleException($exception);
     }
 }
