@@ -1,20 +1,32 @@
 {
-  "name": "morrislaptop/cakephp-airbrake",
-  "description": "A CakePHP plugin to use Airbrake for errors and exceptions.",
-  "authors": [
-    {
-      "name": "morrislaptop",
-      "email": "craig.michael.morris@gmail.com"
+    "name": "chrisshick/AirbrakeCake",
+    "type": "cakephp-plugin",
+    "description": "A CakePHP 3.x plugin to use Airbrake for errors and exceptions",
+    "keywords": ["cakephp", "cakephp3", "plugin", "airbrake"],
+    "homepage": "https://github.com/chrisShick/AirbrakeCake",
+    "require": {
+        "php": ">=5.4.0",
+        "dbtlr/php-airbrake": "1.*"
+    },
+    "require-dev": {
+      "cakephp/cakephp": "3.0.*-dev",
+      "phpunit/phpunit": "4.1.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Chris Hickingbottom",
+            "email": "chris@pharmedio.com"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "ChrisShick\\AirbrakeCake\\": "src"
+      }
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "ChrisShick\\AirbrakeCake\\Test\\": "tests"
+      }
     }
-  ],
-  "license": "MIT",
-  "type": "cakephp-plugin",
-  "extra": {
-    "installer-name": "AirbrakeCake"
-  },
-  "require": {
-    "php": ">=5.3.0",
-    "composer/installers": "*",
-    "dbtlr/php-airbrake": "1.*"
-  }
 }

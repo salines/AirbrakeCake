@@ -5,21 +5,18 @@
  *
  * Configure::write('AirbrakeCake.apiKey', '<API KEY>');
  */
-
-	App::uses('AirbrakeError', 'AirbrakeCake.Lib');
-
+use Cake\Core\Configure;
 /**
  * Sets the ErrorHandler and ExceptionHandler to
  * AirbrakeError.
  */
-	Configure::write('Error', array(
-		'handler' => 'AirbrakeError::handleError',
-		'level' => E_ALL & ~E_DEPRECATED,
-		'trace' => true
-	));
-
-	Configure::write('Exception', array(
-		'handler' => 'AirbrakeError::handleException',
-		'renderer' => 'ExceptionRenderer',
-		'log' => true
-	));
+Configure::write('Error', array(
+    'handler' => 'AirbrakeHandler::handleError',
+    'level' => E_ALL & ~E_DEPRECATED,
+    'trace' => true
+));
+Configure::write('Exception', array(
+    'handler' => 'AirbrakeHandler::handleException',
+    'renderer' => 'ExceptionRenderer',
+    'log' => true
+));
