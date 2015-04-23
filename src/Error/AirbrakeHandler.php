@@ -40,17 +40,15 @@ class AirbrakeHandler extends ErrorHandler
             if (!$options) {
                 $options = array();
             }
-            if (php_sapi_name() !== 'cli') {
-                $request = Router::getRequest();
-                if ($request) {
-                    $options['component'] = $request->params['controller'];
-                    $options['action'] = $request->params['action'];
-                }
-                $session = $request->session();
-                if (!empty($session)) {
-                    $options['extraParameters'] = Hash::get($options, 'extraParameters', array());
-                    $options['extraParameters']['User']['id'] = $session->read('Auth.User.id');
-                }
+            $request = Router::getRequest();
+            if ($request) {
+                $options['component'] = $request->params['controller'];
+                $options['action'] = $request->params['action'];
+            }
+            $session = $request->session();
+            if (!empty($session)) {
+                $options['extraParameters'] = Hash::get($options, 'extraParameters', array());
+                $options['extraParameters']['User']['id'] = $session->read('Auth.User.id');
             }
             $config = new AirbrakeConfiguration($apiKey, $options);
             $this->_airbrake = new AirbrakeClient($config);
