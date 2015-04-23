@@ -46,9 +46,10 @@ class AirbrakeHandler extends ErrorHandler
                     $options['component'] = $request->params['controller'];
                     $options['action'] = $request->params['action'];
                 }
-                if (!empty($_SESSION)) {
+                $session = $request->session();
+                if (!empty($session)) {
                     $options['extraParameters'] = Hash::get($options, 'extraParameters', array());
-                    $options['extraParameters']['User']['id'] = Hash::get($_SESSION, 'Auth.User.id');
+                    $options['extraParameters']['User']['id'] = $session->read('Auth.User.id');
                 }
             }
             $config = new AirbrakeConfiguration($apiKey, $options);
