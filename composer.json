@@ -23,10 +23,5 @@
       "psr-4": {
         "chrisShick\\AirbrakeCake\\": "src"
       }
-    },
-    "autoload-dev": {
-      "psr-4": {
-        "chrisShick\\AirbrakeCake\\Test\\": "tests"
-      }
     }
 }
