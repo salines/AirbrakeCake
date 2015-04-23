@@ -1,5 +1,5 @@
 {
-    "name": "chrisshick/airbrake-cake",
+    "name": "chrisshick/cakephp-airbrake",
     "type": "cakephp-plugin",
     "description": "A CakePHP 3.x plugin to use Airbrake for errors and exceptions",
     "keywords": ["cakephp", "cakephp3", "plugin", "airbrake"],
