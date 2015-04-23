@@ -6,7 +6,6 @@
  * Time: 10:54 AM
  */
 namespace chrisShick\AirbrakeCake\Error;
-namespace App\Error;
 
 use Cake\Core\Configure;
 use Cake\Error\ErrorHandler;
