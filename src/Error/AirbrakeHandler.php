@@ -31,9 +31,27 @@ class AirbrakeHandler extends ErrorHandler
         $options['AirbrakeCake.apiKey'] = Configure::read('AirbrakeCake.apiKey');
         $options['AirbrakeCake.options'] = Configure::read('AirbrakeCake.options');
         parent::__construct($options);
+        
+        $this->_airbrake = $this->getAirbrake();
     }
 
-    public function getAirbrake() {
+    /**
+     * Creates a new Airbrake instance, or returns an instance created earlier.
+     * You can pass options to Airbrake\Configuration by setting the AirbrakeCake.options
+     * configuration property.
+     *
+     * For example to set the environment name:
+     *
+     * ```
+     * Configure::write('AirbrakeCake.options', array(
+     * 	'environmentName' => 'staging'
+     * ));
+     * ```
+     *
+     * @return Airbrake\Client
+     */
+    public function getAirbrake()
+    {
         if (empty($this->_airbrake)) {
             $apiKey = $this->_options['AirbrakeCake.apiKey'];
             $options = $this->_options['AirbrakeCake.options'];
@@ -51,12 +69,16 @@ class AirbrakeHandler extends ErrorHandler
                 $options['extraParameters']['User']['id'] = $session->read('Auth.User.id');
             }
             $config = new AirbrakeConfiguration($apiKey, $options);
-            $this->_airbrake = new AirbrakeClient($config);
+            return new AirbrakeClient($config);
         }
         return $this->_airbrake;
     }
 
-    public function handleError($code, $description, $file = null, $line = null) {
+    /**
+     * {@inheritDoc}
+     */
+    public function handleError($code, $description, $file = null, $line = null)
+    {
         list($error) = self::mapErrorCode($code);
         $backtrace = debug_backtrace();
         if (count($backtrace) > 1) {
@@ -73,6 +95,7 @@ class AirbrakeHandler extends ErrorHandler
         $this->_airbrake->notify($notice);
         return parent::handleError($code, $description, $file, $line);
     }
+
     /**
      * {@inheritDoc}
      */
