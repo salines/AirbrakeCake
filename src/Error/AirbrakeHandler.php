@@ -30,7 +30,7 @@ class AirbrakeHandler extends ErrorHandler
         $options['apiKey'] = Configure::read('AirbrakeCake.apiKey');
         $options['options'] = Configure::read('AirbrakeCake.options');
         $options['debugOption'] = Configure::read('AirbrakeCake.debugOption');
-        $options['debug']  = Configure::read('Debug');
+        $options['debug']  = Configure::read('debug');
         parent::__construct($options);
     }
 
