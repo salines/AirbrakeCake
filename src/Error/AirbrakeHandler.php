@@ -27,7 +27,6 @@ class AirbrakeHandler extends ErrorHandler
      */
     public function __construct($options = [])
     {
-        $options += Configure::read('AirbrakeCake');
         $options['debug']  = Configure::read('debug');
         parent::__construct($options);
     }
@@ -50,8 +49,9 @@ class AirbrakeHandler extends ErrorHandler
     public function getAirbrakeInstance()
     {
         if (empty($this->_airbrake)) {
-            $apiKey = $this->_options['apiKey'];
-            $options = $this->_options['options'];
+            $airbrakeOptions = Configure::read('AirbrakeCake');
+            $apiKey = $airbrakeOptions['apiKey'];
+            $options = $airbrakeOptions['options'];
             if (!$options) {
                 $options = array();
             }
@@ -76,7 +76,7 @@ class AirbrakeHandler extends ErrorHandler
      */
     public function handleError($code, $description, $file = null, $line = null)
     {
-        if($this->_options['debug'] === false || $this->_options['debugOption'] === true ) {
+        if($this->_options['debug'] === false || Configure::read('AirbrakeCake.debugOption') === true ) {
             list($error) = self::mapErrorCode($code);
             $backtrace = debug_backtrace();
             if (count($backtrace) > 1) {
@@ -101,7 +101,7 @@ class AirbrakeHandler extends ErrorHandler
      */
     public function handleException(\Exception $exception)
     {
-        if($this->_options['debug'] === false || $this->_options['debugOption'] === true ) {
+        if($this->_options['debug'] === false || Configure::read('AirbrakeCake.debugOption') === true ) {
             $airbreak = $this->getAirbrakeInstance();
             $airbreak->notifyOnException($exception);
         }
