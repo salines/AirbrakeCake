@@ -51,8 +51,9 @@ class AirbrakeHandler extends ErrorHandler
         if (empty($this->_airbrake)) {
             $airbrakeOptions = Configure::read('AirbrakeCake');
             $apiKey = $airbrakeOptions['apiKey'];
-            $options = $airbrakeOptions['options'];
-            if (!$options) {
+            if(isset($airbrakeOptions['options'])){
+                $options = $airbrakeOptions['options'];
+            } else {
                 $options = array();
             }
             $request = Router::getRequest();
