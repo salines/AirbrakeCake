@@ -2,7 +2,9 @@
 A plugin to seamlessly integrate Airbrake with CakePHP 3 for errors and exceptions.
 
 # Installation via Composer
+```
 composer require chrisshick/cakephp-airbrake
+```
 
 # Setup
 You don't have to enable the Plugin because it uses an error handler. Therefore, all you have to do is replace this line in the 
