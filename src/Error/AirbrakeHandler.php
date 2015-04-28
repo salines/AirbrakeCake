@@ -75,7 +75,7 @@ class AirbrakeHandler extends ErrorHandler
     /**
      * {@inheritDoc}
      */
-    public function handleError($code, $description, $file = null, $line = null)
+    public function handleError($code, $description, $file = null, $line = null, $context = null)
     {
         if($this->_options['debug'] === false || Configure::read('AirbrakeCake.debugOption') === true ) {
             list($error) = self::mapErrorCode($code);
@@ -88,13 +88,14 @@ class AirbrakeHandler extends ErrorHandler
                 'errorClass' => $error,
                 'backtrace' => $backtrace,
                 'errorMessage' => $description,
-                'extraParams' => null
+                'extraParams' => null,
+
             ));
 
             $airbreak = $this->getAirbrakeInstance();
             $airbreak->notify($notice);
         }
-        return parent::handleError($code, $description, $file, $line);
+        return parent::handleError($code, $description, $file, $line, $context);
     }
 
     /**
